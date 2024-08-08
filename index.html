@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lit by Lamp</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            box-sizing: content-box;
+            font-family: Arial, sans-serif;
+            background-color: black;
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+          /*  overflow: hidden;*/
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            display:grid;
+            
+            align-items:center;
+            justify-content:center;
+
+        }
+    
+    
+    p {
+        color:white;
+    }
+
+        .animate-btn {
+            padding: 15px 20px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 10px;
+           cursor: pointer;
+            
+            position: relative;
+           
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .animate-btn:active {
+           animation: scaleUp .5s ease 0s;
+           background-color: green;
+        
+        }
+    
+    @keyframes scaleUp{
+        
+        0%{
+           transform: scale(1);
+           
+        }
+        
+        33%{
+            transform: scale(1.15);
+            
+            
+        }
+        100%{
+            transform: scale(1);
+            
+        }
+    }
+
+        .slider {
+            width: 80%;
+          
+            max-width:500px;
+
+            overflow:hidden;
+            border-radius:10px;
+            display:none;
+          max-height:75vh;
+            margin-left:10%;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+       
+            
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.6s ease-in-out;
+            align:center;
+        }
+
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .slide img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .controls {
+           /* position:absolute;*/
+            border:2px solid #00FF00;
+            border-radius:10px;
+            margin:20% 10%;
+          /*  top: 55vh;*/
+            width: 80%;
+            padding:5px;
+            display: flex;
+            justify-content: space-between;
+         /*  transform: translateY(-50%);*/
+        }
+
+        .prev, .next {
+            background-color: rgba(0, 0, 0, 0.4);
+            color: white;
+            border: none;
+            padding: 5px 20px;
+            cursor: pointer;
+            border-radius: 45%;
+            font-size: 25px;
+        }
+
+        .prev:active, .next:active {
+            background-color: rgba(0, 150, 0, 0.8);
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+            }
+            to { 
+                opacity: 1; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!--This div contains all images-->
+        
+        <div class="slider" id="imageSlider">
+            <div class="slides">
+                <div class="slide"><img src="image1.jpg" alt="Image 1"></div>
+                <div class="slide"><img src="image2.jpg" alt="Image 2"></div>
+                <div class="slide"><img src="image3.jpg" alt="Image 3"></div>
+                <div class="slide"><img src="image4.jpg" alt="Image 4"></div>
+                <div class="slide"><img src="image5.jpg" alt="Image 5"></div>
+                <div class="slide"><img src="image6.jpg" alt="Image 6"></div>
+                <div class="slide"><img src="image7.jpg" alt="Image 7"></div>
+            </div>
+            <div class="controls">
+                <button class="prev" onclick="prevSlide()">&#10094;</button>
+                <section><p>Hii Classmate &#128521;</p></section>
+                <button class="next" onclick="nextSlide()">&#10095;</button>
+            </div>
+        </div>
+        
+   <button class="animate-btn" id="sliderButton">Reveal Beauty</button>
+    </div>
+    
+    <!--Javascript Starts Here-->
+    
+    <script>
+        let currentSlide = 0;
+        const slider = document.getElementById('imageSlider');
+        let flag=0;
+    
+document.getElementById('sliderButton').addEventListener('click', function() {
+    
+    
+    if(flag==0){      
+document.getElementById('sliderButton').innerHTML="Hide Slider";
+        flag=1;
+    }else{
+        document.getElementById('sliderButton').innerHTML="Reveal Beauty";
+        flag=0;
+    }
+    
+
+   slider.classList.toggle('active');
+    
+        });
+
+ /*Event Listener Ends*/
+    
+   function showSlide(index) {
+       
+            const slides = document.querySelectorAll('.slide');
+            if (index >= slides.length) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = slides.length - 1;
+            } else {
+                currentSlide = index;
+            }
+                
+            const offset = -currentSlide * 100;
+            document.querySelector('.slides').style.transform = `translateX(${offset}%)`;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+    
+ // Auto slide
+        setInterval(() => {
+            if (document.getElementById('imageSlider').classList.contains('active')) {
+                nextSlide();
+            }
+        }, 4000); // Change slide every 4 seconds
+    </script>
+
+</body>
+</html>
